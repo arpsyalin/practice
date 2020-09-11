@@ -1,0 +1,6 @@
+rootProject.name='practice'
+include ':app'
+include ':login'
+include ':network'
+include ':skin'
+include ':media'
