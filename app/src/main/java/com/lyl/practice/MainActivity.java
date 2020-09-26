@@ -13,20 +13,18 @@ import com.lyl.butterknife.annotations.OnClick;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(value = R.id.btn_id)
-    Button btn_id;
-
+    Button mBtnId;
+    @OnClick(value = {R.id.btn_id})
+    public void click(View view) {
+        Toast.makeText(this, "点击了", Toast.LENGTH_SHORT).show();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        btn_id.setText("11111");
+        mBtnId.setText("11111");
     }
 
-    @OnClick(value = {R.id.btn_id})
-    public void click(View view) {
-        // TODO: 2020/9/11 这里换掉ARounder
-        //startActivity(new Intent(this, LoginActivity.class));
-        Toast.makeText(this, "click", Toast.LENGTH_SHORT).show();
-    }
+
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 public class ButterKnife {
     public static void bind(Activity a) {
@@ -15,14 +16,15 @@ public class ButterKnife {
     }
 
     public static void bindInstance(Object a) {
-        String viewBindingClassName = a.getClass().getName() + "$ViewBinding";
+        String className = a.getClass().getName() + "$ViewBinding";
         try {
-            Class viewBindingClass = Class.forName(viewBindingClassName);
-            Constructor viewBindingConstructor = viewBindingClass.getDeclaredConstructor(a.getClass());
-            Object o = viewBindingConstructor.newInstance(a);
-//            o = null;
+            Class clazz = Class.forName(className);
+            Constructor constructor = clazz.getDeclaredConstructor(a.getClass());
+            Object o = constructor.newInstance(a);
+            o = null;
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
+
