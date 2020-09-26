@@ -23,9 +23,6 @@ android {
         main {
             if (isModule.toBoolean()) {
                 manifest.srcFile 'src/main/module/AndroidManifest.xml'
-                java {
-                    exclude "src/main/debug/DebugActivity.java"
-                }
             } else {
                 manifest.srcFile 'src/main/AndroidManifest.xml'
                 java.srcDirs = [
@@ -37,7 +34,6 @@ android {
                         'src/main/module/res'
                 ]
             }
-
         }
     }
     buildTypes {
@@ -46,7 +42,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
