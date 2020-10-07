@@ -23,12 +23,13 @@ public class BuildObjectBindView extends BuildObject {
         String type = this.element.asType().toString();
         int resId = this.element.getAnnotation(BindView.class).value();
         Statement statement = new Statement();
-        statement.setFormat("target.$L =($L) target.findViewById($L)");
         Object[] objects = new Object[3];
         objects[0] = filedName;
         objects[1] = type;
         objects[2] = resId;
+        statement.setFormat("target.$L =($L) target.findViewById($L)");
         statement.setArgs(objects);
         statements.add(statement);
+        System.out.println("BuildObjectBindView initStatement end");
     }
 }

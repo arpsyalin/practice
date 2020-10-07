@@ -11,9 +11,13 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/arouter" />
+            <option value="$PROJECT_DIR$/arouter-annotations" />
+            <option value="$PROJECT_DIR$/arouter-compiler" />
             <option value="$PROJECT_DIR$/butterknife" />
             <option value="$PROJECT_DIR$/butterknife-annotations" />
             <option value="$PROJECT_DIR$/butterknife-compiler" />
+            <option value="$PROJECT_DIR$/libcore" />
             <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/media" />
             <option value="$PROJECT_DIR$/network" />

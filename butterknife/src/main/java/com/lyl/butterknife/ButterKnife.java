@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.view.View;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 
 public class ButterKnife {
     public static void bind(Activity a) {

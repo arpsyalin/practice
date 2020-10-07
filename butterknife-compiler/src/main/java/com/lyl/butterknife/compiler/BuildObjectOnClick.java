@@ -24,12 +24,13 @@ public class BuildObjectOnClick extends BuildObject {
         int[] resIds = element.getAnnotation(OnClick.class).value();
         for (int resId : resIds) {
             Statement statement = new Statement();
-            statement.setFormat("target.findViewById($L) .setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {target.$N(v);}})");
             Object[] objects = new Object[2];
             objects[0] = resId;
             objects[1] = filedName;
+            statement.setFormat("target.findViewById($L).setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {target.$N(v);}})");
             statement.setArgs(objects);
             statements.add(statement);
+            System.out.println("BuildObjectOnClick initStatement end");
         }
     }
 
