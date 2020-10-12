@@ -30,7 +30,7 @@ public class BuildObjectOnClick extends BuildObject {
             statement.setFormat("target.findViewById($L).setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {target.$N(v);}})");
             statement.setArgs(objects);
             statements.add(statement);
-            System.out.println("BuildObjectOnClick initStatement end");
+//            System.out.println("BuildObjectOnClick initStatement end");
         }
     }
 

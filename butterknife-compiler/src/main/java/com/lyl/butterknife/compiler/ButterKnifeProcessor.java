@@ -33,11 +33,10 @@ public final class ButterKnifeProcessor extends BaseProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> typeElements, RoundEnvironment env) {
-        System.out.println("ButterKnifeProcessor:" + env.processingOver());
-//        if(env.processingOver()) {
+//        System.out.println("ButterKnifeProcessor:" + env.processingOver());
+//        System.out.println("ButterKnifeProcessor:" + env.processingOver() + ";RoundEnvironment:size:" + env);
         Map<Element, List<BuildObject>> elementListMap = findBuildObject(env);
         buildFile(elementListMap);
-//        }
         return false;
     }
 

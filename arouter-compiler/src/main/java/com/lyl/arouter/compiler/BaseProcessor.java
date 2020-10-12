@@ -1,5 +1,6 @@
 package com.lyl.arouter.compiler;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -10,6 +11,8 @@ import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.util.Elements;
+import javax.tools.JavaFileManager;
+import javax.tools.StandardLocation;
 
 /**
  * * @Description 基础Processor类

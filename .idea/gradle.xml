@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/arouter" />
             <option value="$PROJECT_DIR$/arouter-annotations" />
             <option value="$PROJECT_DIR$/arouter-compiler" />
+            <option value="$PROJECT_DIR$/arouter-constant" />
             <option value="$PROJECT_DIR$/butterknife" />
             <option value="$PROJECT_DIR$/butterknife-annotations" />
             <option value="$PROJECT_DIR$/butterknife-compiler" />

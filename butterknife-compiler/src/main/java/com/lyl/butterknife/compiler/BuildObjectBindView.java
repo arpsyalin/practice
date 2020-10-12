@@ -30,6 +30,6 @@ public class BuildObjectBindView extends BuildObject {
         statement.setFormat("target.$L =($L) target.findViewById($L)");
         statement.setArgs(objects);
         statements.add(statement);
-        System.out.println("BuildObjectBindView initStatement end");
+//        System.out.println("BuildObjectBindView initStatement end");
     }
 }

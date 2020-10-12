@@ -42,5 +42,6 @@ dependencies {
     implementation project(path: ':arouter')
     implementation project(path: ':arouter-annotations')
     annotationProcessor project(path: ':arouter-compiler')
+    implementation project(path: ':arouter-constant')
 
 }

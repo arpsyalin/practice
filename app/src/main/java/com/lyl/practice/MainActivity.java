@@ -2,13 +2,16 @@ package com.lyl.practice;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.lyl.arouter.annotations.IsActivity;
+import com.lyl.arouter.livedata.ALiveDataFactory;
 import com.lyl.butterknife.ButterKnife;
 import com.lyl.butterknife.annotations.BindView;
 import com.lyl.butterknife.annotations.OnClick;
@@ -30,5 +33,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mBtnId.setText("11111");
+//        Intent intent = getIntent();
+//        intent.getA();
+        ALiveDataFactory.getInstance().with("aa111", String.class).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+
+            }
+        });
     }
 }
