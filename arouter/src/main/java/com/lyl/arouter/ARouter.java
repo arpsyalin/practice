@@ -90,7 +90,7 @@ public class ARouter {
     public void jumpActivity(Context context, String jumpKey) {
 //        jumpActivity(context, key, null, null);
         if (hasInit) {
-            boolean isCanJump = isCanJump(mInterceptorData, jumpKey);
+            boolean isCanJump = isCanJump(context, mInterceptorData, jumpKey);
             if (!isCanJump && !TextUtils.isEmpty(jumpKey) && mRouterData.containsKey(jumpKey)) {
                 Class<? extends Activity> clazz = mRouterData.get(jumpKey);
                 if (clazz != null) {
@@ -133,14 +133,14 @@ public class ARouter {
         context.startActivity(intent);
     }
 
-    private boolean isCanJump(Map<String, Class<? extends IInterceptor>> interceptorDatas, String key) {
+    private boolean isCanJump(Context context, Map<String, Class<? extends IInterceptor>> interceptorDatas, String key) {
         if (!interceptorDatas.containsKey(key)) {
             return false;
         } else {
             Class c = interceptorDatas.get(key);
             try {
                 IInterceptor o = (IInterceptor) c.newInstance();
-                return o.interceptor();
+                return o.interceptor(context);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InstantiationException e) {

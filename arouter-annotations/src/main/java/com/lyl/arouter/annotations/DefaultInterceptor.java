@@ -9,7 +9,7 @@ package com.lyl.arouter.annotations;
  **/
 public class DefaultInterceptor implements IInterceptor {
     @Override
-    public boolean interceptor() {
+    public boolean interceptor(Object context) {
         return false;
     }
 }

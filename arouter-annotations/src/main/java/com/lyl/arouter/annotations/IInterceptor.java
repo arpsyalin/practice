@@ -1,5 +1,6 @@
 package com.lyl.arouter.annotations;
 
+
 /**
  * * @Description 拦截器接口
  * * @Author 刘亚林
@@ -8,5 +9,5 @@ package com.lyl.arouter.annotations;
  * * @Remark TODO
  **/
 public interface IInterceptor {
-    boolean interceptor();
+    boolean interceptor(Object context);
 }

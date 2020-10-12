@@ -1,8 +1,9 @@
 package com.lyl.practice.interceptor;
 
+import android.content.Context;
+
 import com.lyl.arouter.ARouter;
 import com.lyl.arouter.annotations.IInterceptor;
-import com.lyl.practice.PApplication;
 
 /**
  * * @Description 登录拦截器
@@ -13,8 +14,8 @@ import com.lyl.practice.PApplication;
  **/
 public class LoginInterceptor implements IInterceptor {
     @Override
-    public boolean interceptor() {
-        ARouter.getInstance().jumpActivity(PApplication.getInstant(), "com.lyl.login/LoginActivity");
+    public boolean interceptor(Object context) {
+        ARouter.getInstance().jumpActivity((Context) context, "com.lyl.login/LoginActivity");
         return true;
     }
 }
