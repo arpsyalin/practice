@@ -14,7 +14,6 @@ public abstract class BuildObject {
         this.element = element;
         this.clazz = clazz;
         initStatement();
-        System.out.println("--------");
     }
 
     public Element getElement() {
