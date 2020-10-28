@@ -39,6 +39,9 @@ public class ARouter {
     //是否初始化
     private boolean hasInit = false;
 
+    private ARouter() {
+    }
+
     public static ARouter getInstance() {
         return instance;
     }
