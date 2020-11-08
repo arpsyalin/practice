@@ -187,7 +187,6 @@ public class ARouterProcessor extends BaseProcessor {
                     constructorMethodBuilder.addStatement("ARouter.getInstance().addInterceptor($S,$L.class)", key, interceptorName);
                 }
             }
-            buildFinalize(constructorMethodBuilder);
             classBuilder.addMethod(constructorMethodBuilder.build());
             JavaFile javaFile = JavaFile.builder("com.lyl.arouter", classBuilder.build()).build();
             javaFile.writeTo(mFiler);
@@ -195,14 +194,7 @@ public class ARouterProcessor extends BaseProcessor {
             e.printStackTrace();
         }
     }
-    //在尾部添加释放对象
-    private void buildFinalize(MethodSpec.Builder constructorMethodBuilder) {
-        constructorMethodBuilder.addStatement("try {\n" +
-                "    finalize();\n" +
-                "} catch (Throwable throwable) {\n" +
-                "    throwable.printStackTrace();\n" +
-                "}");
-    }
+
     //通过Annotation类获取类名
     private String getClassNameByAnnotation(Element object, Class<? extends Annotation> clazz, String valueName) {
         try {

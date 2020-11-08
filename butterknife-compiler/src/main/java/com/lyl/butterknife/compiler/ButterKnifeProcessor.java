@@ -70,18 +70,9 @@ public final class ButterKnifeProcessor extends BaseProcessor {
                 constructorMethodBuilder.addStatement(statement.getFormat(), statement.getArgs());
             }
         }
-        buildFinalize(constructorMethodBuilder);
         classBuilder.addMethod(constructorMethodBuilder.build());
     }
 
-    //在尾部添加释放对象
-    private void buildFinalize(MethodSpec.Builder constructorMethodBuilder) {
-        constructorMethodBuilder.addStatement("try {\n" +
-                "    finalize();\n" +
-                "} catch (Throwable throwable) {\n" +
-                "    throwable.printStackTrace();\n" +
-                "}");
-    }
 
     /**
      * 查找建造对象
