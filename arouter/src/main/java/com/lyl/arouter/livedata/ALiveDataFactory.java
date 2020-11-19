@@ -8,7 +8,7 @@ import java.util.Map;
  * * @Author 刘亚林
  * * @CreateDate 2020/10/8
  * * @Version 1.0
- * * @Remark TODO
+ * * @Remark 为什么写成在ARouter里面仅仅是为了提醒应该使用LiveData做数据传输监听
  **/
 public class ALiveDataFactory {
     private static ALiveDataFactory instance = new ALiveDataFactory();
@@ -33,6 +33,7 @@ public class ALiveDataFactory {
         return (ALiveData<T>) mALiveDataMap.get(key);
     }
 
+    //移除
     public void remove(String key) {
         mALiveDataMap.remove(key);
     }

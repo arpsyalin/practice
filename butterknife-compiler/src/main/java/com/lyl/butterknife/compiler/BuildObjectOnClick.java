@@ -27,6 +27,7 @@ public class BuildObjectOnClick extends BuildObject {
             Object[] objects = new Object[2];
             objects[0] = resId;
             objects[1] = filedName;
+            //这个new android.view.View.OnClickListener会引用住所在的类将引起内存泄漏！注意解决！
             statement.setFormat("target.findViewById($L).setOnClickListener(new android.view.View.OnClickListener() { @Override public void onClick(android.view.View v) {target.$N(v);}})");
             statement.setArgs(objects);
             statements.add(statement);

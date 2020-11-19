@@ -15,9 +15,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "SERVER_URL", rootProject.ext.serverUrl.DEBUG_SERVER)
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "SERVER_URL", rootProject.ext.serverUrl.RELEASE_SERVER)
         }
     }
 
@@ -27,6 +31,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation rootProject.ext.toolDependencies.gson
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -43,6 +48,8 @@ dependencies {
     implementation project(path: ':arouter-annotations')
     annotationProcessor project(path: ':arouter-compiler')
     implementation project(path: ':arouter-constant')
+    implementation project(path: ':ifw')
+    implementation project(path: ':network')
 
 }
 

@@ -13,8 +13,7 @@ public class ReflexUtils {
     public static void genObjByClassName(String className) {
         try {
             Class clazz = Class.forName(className);
-            Object o = clazz.newInstance();
-            o = null;
+            clazz.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -45,4 +45,9 @@ public class MainActivity extends AppCompatActivity {
         });
 //        mainActivity$ViewBinding=null;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

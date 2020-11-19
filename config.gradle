@@ -14,8 +14,8 @@ allprojects {
 }
 
 ext {
-//        compileSdkVersion 30
-//        buildToolsVersion "30.0.2"
+
+//        targetSdkVersion = 30
     compileSdkVersion = 29
     targetSdkVersion = 29
     buildToolsVersion = '29.0.3'
@@ -34,6 +34,7 @@ ext {
     annotationVersion = '1.1.0'
     lifecycleVersion = '2.0.0'
     BreathViewVersion = '1.0'
+    gsonVersion = '2.8.6'
     licenseId = [
             betterLearnBDFCLicenseId  : "lzx-smartslearn-face-android",
             betterLearnBDFCLicenseName: "idl-license.face-android",
@@ -45,8 +46,8 @@ ext {
             versionCode: 1,
     ]
     serverUrl = [
-            RELEASE_SERVER: 'http://192.168.1.100:8080',
-            DEBUG_SERVER  : 'http://192.168.1.100:8080'
+            RELEASE_SERVER: "\"http://192.168.1.100:8080\"",
+            DEBUG_SERVER  : "\"http://192.168.1.100:8080\""
     ]
 
     buildAttribute = [
@@ -71,10 +72,12 @@ ext {
 
     ]
 
+
     toolDependencies = [
             utilcodex: "com.blankj:utilcodex:${utilcodexVersion}",
-    ]
+            gson     : "com.google.code.gson:gson:${gsonVersion}",
 
+    ]
     errorDependencies = [
             leakcanary: "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryVersion}",
     ]

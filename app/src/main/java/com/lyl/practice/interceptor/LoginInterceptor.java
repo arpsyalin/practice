@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.lyl.arouter.ARouter;
 import com.lyl.arouter.annotations.IInterceptor;
+import com.lyl.arouter.constant.ARouterConstant;
 
 /**
  * * @Description 登录拦截器
@@ -15,7 +16,7 @@ import com.lyl.arouter.annotations.IInterceptor;
 public class LoginInterceptor implements IInterceptor {
     @Override
     public boolean interceptor(Object context) {
-//        ARouter.getInstance().jumpActivity((Context) context, "com.lyl.login/LoginActivity");
+//        ARouter.getInstance().jumpActivity((Context) context, ARouterConstant.LOGINACTIVITY);
         return false;
     }
 }
