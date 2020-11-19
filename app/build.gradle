@@ -1,13 +1,13 @@
-apply plugin: 'com.android.application'
-
+ext.mainApp = true
+apply from: rootProject.file('component.gradle')
 android {
-    compileSdkVersion project.ext.compileSdkVersion
-    buildToolsVersion project.ext.buildToolsVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.lyl.practice"
-        minSdkVersion project.ext.minSdkVersion
-        targetSdkVersion project.ext.targetSdkVersion
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -31,9 +31,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    if (isModule.toBoolean()) {
+//    if (ext.mainApp) {
         implementation project(path: ':login')
-    }
+//    }
 
     implementation project(path: ':butterknife')
     implementation project(path: ':butterknife-annotations')
@@ -45,3 +45,5 @@ dependencies {
     implementation project(path: ':arouter-constant')
 
 }
+
+unifies(android)

@@ -1,41 +1,19 @@
-if (isModule.toBoolean()) {
-    apply plugin: 'com.android.library'
-} else {
-    apply plugin: 'com.android.application'
-}
+ext.debugAppId = "com.lyl.login"
+apply from: rootProject.file('component.gradle')
 android {
-    compileSdkVersion project.ext.compileSdkVersion
-    buildToolsVersion project.ext.buildToolsVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        if (!isModule.toBoolean()) {
-            applicationId "com.lyl.login"
-        }
-        minSdkVersion project.ext.minSdkVersion
-        targetSdkVersion project.ext.targetSdkVersion
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
-    sourceSets {
-        main {
-            if (isModule.toBoolean()) {
-                manifest.srcFile 'src/main/module/AndroidManifest.xml'
-            } else {
-                manifest.srcFile 'src/main/AndroidManifest.xml'
-                java.srcDirs = [
-                        "src/main/java",
-                        "src/main/module/java"
-                ]
-                res.srcDirs = [
-                        'src/main/res',
-                        'src/main/module/res'
-                ]
-            }
-        }
-    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -55,3 +33,5 @@ dependencies {
     implementation project(path: ':arouter-annotations')
     annotationProcessor project(path: ':arouter-compiler')
 }
+
+unifies(android)

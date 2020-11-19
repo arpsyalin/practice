@@ -15,7 +15,7 @@ import com.lyl.arouter.annotations.IInterceptor;
 public class LoginInterceptor implements IInterceptor {
     @Override
     public boolean interceptor(Object context) {
-        ARouter.getInstance().jumpActivity((Context) context, "com.lyl.login/LoginActivity");
-        return true;
+//        ARouter.getInstance().jumpActivity((Context) context, "com.lyl.login/LoginActivity");
+        return false;
     }
 }

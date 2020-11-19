@@ -31,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        new TestObject(this);
+//        ButterKnife.bind(this);
+//        MainActivity$ViewBinding mainActivity$ViewBinding =     new MainActivity$ViewBinding(this);
         mBtnId.setText("11111");
 //        Intent intent = getIntent();
 //        intent.getA();
@@ -41,5 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+//        mainActivity$ViewBinding=null;
     }
 }

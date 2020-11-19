@@ -23,6 +23,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+//        new HomeActivity$ViewBinding(this);
+//        mJumpMain.setText("xxxx");
+
     }
 
     @OnClick(R.id.btn_to_main)
