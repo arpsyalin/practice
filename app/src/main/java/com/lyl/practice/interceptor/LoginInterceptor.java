@@ -1,10 +1,6 @@
 package com.lyl.practice.interceptor;
 
-import android.content.Context;
-
-import com.lyl.arouter.ARouter;
 import com.lyl.arouter.annotations.IInterceptor;
-import com.lyl.arouter.constant.ARouterConstant;
 
 /**
  * * @Description 登录拦截器

@@ -14,13 +14,6 @@ import javax.lang.model.util.Elements;
 import javax.tools.JavaFileManager;
 import javax.tools.StandardLocation;
 
-/**
- * * @Description 基础Processor类
- * * @Author 刘亚林
- * * @CreateDate 2020/9/29
- * * @Version 1.0
- * * @Remark TODO
- **/
 public abstract class BaseProcessor extends AbstractProcessor {
     protected Filer mFiler;
     protected Elements mElementUtils;

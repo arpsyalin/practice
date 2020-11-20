@@ -2,7 +2,6 @@ package com.lyl.practice;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;

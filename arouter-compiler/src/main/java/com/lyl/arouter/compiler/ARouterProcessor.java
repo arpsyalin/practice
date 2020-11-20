@@ -125,6 +125,7 @@ public class ARouterProcessor extends BaseProcessor {
     private void buildARouterConstantFile(File savePath, String... fileds) {
         FileOutputStream fileOutputStream = null;
         try {
+            System.out.println(savePath);
             fileOutputStream = new FileOutputStream(savePath);
             FileChannel channel = fileOutputStream.getChannel();
             ByteBuffer buffer = ByteBuffer.allocate(1024 * 100);
@@ -140,7 +141,6 @@ public class ARouterProcessor extends BaseProcessor {
             System.out.println(stringBuffer);
             buffer.put(stringBuffer.toString().getBytes());
             buffer.flip();
-            //将内容写到通道中
             channel.write(buffer);
         } catch (IOException e) {
             e.printStackTrace();
@@ -179,7 +179,6 @@ public class ARouterProcessor extends BaseProcessor {
                 String key = object.getAnnotation(IsActivity.class).value();
                 String packageName = mElementUtils.getPackageOf(object).getQualifiedName().toString();
                 String className = object.getSimpleName().toString();
-                //object.getAnnotation(IsActivity.class).interceptor().getCanonicalName();不能直接这么获取会报错
                 String interceptorName = getClassNameByAnnotation(object, IsActivity.class, "interceptor");
                 System.out.println(interceptorName);
                 constructorMethodBuilder.addStatement("ARouter.getInstance().addRouterData($S,$L.$L.class)", key, packageName, className);
@@ -195,7 +194,6 @@ public class ARouterProcessor extends BaseProcessor {
         }
     }
 
-    //通过Annotation类获取类名
     private String getClassNameByAnnotation(Element object, Class<? extends Annotation> clazz, String valueName) {
         try {
             AnnotationMirror annotationMirror = MoreElements.getAnnotationMirror(object, clazz).get();

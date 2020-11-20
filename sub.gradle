@@ -1,0 +1,186 @@
+import java.util.regex.Pattern
+
+def versionUp = {
+    try {
+        return (project.gradle.gradleVersion as float) >= 4.1F
+    } catch (Exception e) {
+        return (project.gradle.gradleVersion.substring(0, 2) as float) >= 4.1F
+    }
+}
+def getExt = { p, dn ->
+    def have = p.ext.has(dn)
+    if (have) {
+        return p.ext.get(dn)
+    }
+}
+
+def nilError(p, key, error) {
+    if (!p.ext.has(key)) {
+        throw new Exception(error)
+    }
+}
+
+//必须要设置主运行模块
+nilError(rootProject, "main", "no main modular")
+nilError(rootProject, "compileSdkVersion", "root build.gradle ext must have compileSdkVersion")
+nilError(rootProject, "buildToolsVersion", "root build.gradle ext must have buildToolsVersion")
+////全局的变量设置
+def mainNodular = rootProject.ext.get("main")
+def compileSdk = rootProject.ext.get("compileSdkVersion")
+def buildTools = rootProject.ext.get("buildToolsVersion")
+def vCode = getExt(rootProject, "versionCode")
+def vName = getExt(rootProject, "versionName")
+def minVersion = getExt(rootProject, "minSdkVersion")
+def subComponentProject = getExt(rootProject, "other")
+def rootDependency = getExt(rootProject, "dependencys")
+def DEBUG_SERVER = getExt(rootProject, "DEBUG_SERVER")
+def RELEASE_SERVER = getExt(rootProject, "RELEASE_SERVER")
+println(DEBUG_SERVER)
+////单个项目内的设置
+def isRunAtApp = project.ext.has("isRunAtApp")
+def projectName = project.getName()
+def runAppId = getExt(project, "runAppId")
+//全局和单个项目内结合的便利
+def isMainModular = projectName == mainNodular
+def otherDependency = getExt(rootProject, projectName + "Dependencys")
+//从local.properties读取参数
+Properties localProperties = new Properties()
+try {
+    def localFile = project.rootProject.file('local.properties')
+    if (localFile != null && localFile.exists()) {
+        localProperties.load(localFile.newDataInputStream())
+    }
+} catch (Exception ignored) {
+    println("local.properties not found")
+}
+
+if (isRunAtApp) {
+
+}
+isRunAtApp = isMainModular || isRunAtApp;
+if (isRunAtApp) {
+    apply plugin: 'com.android.application'
+    nilError(project, "runAppId", projectName + " must set runAppId like \'ext.runAppId=you.app.id\'")
+} else {
+    apply plugin: 'com.android.library'
+}
+
+//编译设置
+//def taskNames = project.gradle.startParameter.taskNames
+//def regex = "((.*:)?${project.name.toUpperCase()}:)?((ASSEMBLE)|(INSTALL)|((BUILD)?TINKER)|(RESGUARD)).*"
+//def taskBuildApkPattern = Pattern.compile(regex)
+//for (String task : taskNames) {
+//    if (taskBuildApkPattern.matcher(task.toUpperCase()).matches()) {
+//        curModuleIsBuildingApk = true
+//        break
+//    }
+//}
+
+android {
+    compileSdkVersion compileSdk
+    buildToolsVersion buildTools
+    defaultConfig {
+        if (runAppId != null && isRunAtApp) {
+            applicationId runAppId
+        }
+        minSdkVersion minVersion == null ? 16 : minVersion
+        targetSdkVersion compileSdk
+        if (isMainModular) {
+            versionCode vCode == null ? 1 : vCode
+            versionName vName == null ? "1.0" : vName
+        } else {
+            versionCode 1
+            versionName "1.0"
+        }
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    sourceSets {
+        main {
+            //默认的作为application运行时Manifest文件路径
+            def debugManifest = 'src/main/debug/AndroidManifest.xml'
+            if (isRunAtApp && project.file(debugManifest).exists()) {
+                manifest.srcFile debugManifest
+            } else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                //集成开发模式下自动排除debug文件夹中的所有Java文件
+                // 可以将debug代码放在这个包内，例如：Application子类
+                java {
+                    exclude 'debug/**'
+                }
+            }
+            if (isRunAtApp) {
+                //debug模式下，如果存在src/main/debug/assets，则自动将其添加到assets源码目录
+                if (project.file('src/main/debug/assets').exists()) {
+                    assets.srcDirs = ['src/main/assets', 'src/main/debug/assets']
+                }
+                //debug模式下，如果存在src/main/debug/java，则自动将其添加到java源码目录
+                if (project.file('src/main/debug/java').exists()) {
+                    java.srcDirs = ['src/main/java', 'src/main/debug/java']
+                }
+                //debug模式下，如果存在src/main/debug/res，则自动将其添加到资源目录
+                if (project.file('src/main/debug/res').exists()) {
+                    res.srcDirs = ['src/main/res', 'src/main/debug/res']
+                }
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            if (isRunAtApp && DEBUG_SERVER != null) {
+                buildConfigField("String", "SERVER_URL", "\"${DEBUG_SERVER}\"")
+            }
+        }
+        release {
+            if (isRunAtApp && RELEASE_SERVER != null) {
+                buildConfigField("String", "SERVER_URL", "\"${RELEASE_SERVER}\"")
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    def tmpDependency = new ArrayList<String>()
+    if (otherDependency != null)
+        tmpDependency.addAll(otherDependency)
+    if (rootDependency != null)
+        tmpDependency.addAll(rootDependency)
+    //循环添加
+    tmpDependency.each { v ->
+        if (!isRunAtApp) {
+            if (v.split(":").size() == 3) {
+                if (versionUp()) {
+                    api v
+                } else {
+                    compile v
+                }
+            } else {
+                if (v.startsWith("ap:")) {
+                    v = v.replace("ap:", ":")
+                    annotationProcessor project("$v")
+                } else {
+                    if (versionUp()) {
+                        api project(path: "$v")
+                    } else {
+                        compile project(path: "$v")
+                    }
+                }
+            }
+        } else {
+            if (v.split(":").size() == 3) {
+                implementation v
+            } else {
+                if (v.startsWith("ap:")) {
+                    v = v.replace("ap:", ":")
+                    println(v)
+                    annotationProcessor project(path: "$v")
+                } else {
+                    implementation project(path: "$v")
+                }
+            }
+        }
+    }
+}

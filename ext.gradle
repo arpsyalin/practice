@@ -1,0 +1,46 @@
+ext {
+    main = "app"
+    compileSdkVersion = 29
+    buildToolsVersion = '29.0.3'
+    appcompatVersion = '1.1.0'
+    DEBUG_SERVER = "192.168.1.100"
+    RELEASE_SERVER = "192.168.1.100"
+    dependencys = [
+            "com.android.support:multidex:1.0.2",
+            "androidx.constraintlayout:constraintlayout:1.1.3",
+            "androidx.appcompat:appcompat:1.1.0",
+            "androidx.recyclerview:recyclerview:1.1.0",
+            "com.google.android.material:material:1.0.0",
+            "androidx.annotation:annotation:1.1.0",
+            "androidx.lifecycle:lifecycle-extensions:2.0.0",
+    ]
+    appDependencys = [
+            "com.google.code.gson:gson:2.8.6",
+            ":login",
+            ":butterknife",
+            ":butterknife-annotations",
+            'ap:butterknife-compiler',
+            ":arouter",
+            ":arouter-annotations",
+            'ap:arouter-compiler',
+            ":ifw",
+            ":network",
+            ":arouter-constant"
+
+    ]
+
+    arouterDependencys = [
+            ':arouter-annotations'
+    ]
+    loginDependencys = [
+            ':arouter',
+            ':arouter-annotations',
+            'ap:arouter-compiler',
+            ':butterknife',
+            ":arouter-constant"
+    ]
+    networkDependencys = [
+            "com.squareup.okhttp3:okhttp:4.9.0",
+            ':ifw'
+    ]
+}

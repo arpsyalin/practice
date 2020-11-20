@@ -1,4 +1,4 @@
-rootProject.name='practice'
+rootProject.name = 'practice'
 include ':app'
 include ':login'
 include ':network'
