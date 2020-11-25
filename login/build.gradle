@@ -1,2 +1,2 @@
-ext.runAppId = "com.lyl.login"
+ext { runAppId = "com.lyl.login" }
 apply from: rootProject.file('sub.gradle')

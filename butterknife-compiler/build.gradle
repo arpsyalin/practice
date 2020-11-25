@@ -7,6 +7,9 @@ dependencies {
     implementation 'com.squareup:javapoet:1.10.0'
     implementation project(path: ':butterknife-annotations')
 }
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
 
 sourceCompatibility = "8"
 targetCompatibility = "8"

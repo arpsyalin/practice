@@ -24,26 +24,24 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(value = {R.id.btn_id})
     public void click(View view) {
-        Toast.makeText(this, "点击了", Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new TestObject(this);
-//        ButterKnife.bind(this);
-//        MainActivity$ViewBinding mainActivity$ViewBinding =     new MainActivity$ViewBinding(this);
+        ButterKnife.bind(this);
         mBtnId.setText("11111");
 //        Intent intent = getIntent();
 //        intent.getA();
-        ALiveDataFactory.getInstance().with("aa111", String.class).observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
+//        ALiveDataFactory.getInstance().with("aa111", String.class).observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(String s) {
+//
+//            }
+//        });
 
-            }
-        });
-//        mainActivity$ViewBinding=null;
     }
 
     @Override

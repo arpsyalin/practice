@@ -13,6 +13,17 @@ def getExt = { p, dn ->
         return p.ext.get(dn)
     }
 }
+def getProp = { p, dn ->
+    def isTrue = p.getProperty(dn)
+//    println("$p")
+//    println(isTrue + "      $dn")
+    if (isTrue == null || isTrue == "false" || !isTrue) {
+        return false
+    } else {
+        return true
+    }
+}
+
 
 def nilError(p, key, error) {
     if (!p.ext.has(key)) {
@@ -35,14 +46,13 @@ def subComponentProject = getExt(rootProject, "other")
 def rootDependency = getExt(rootProject, "dependencys")
 def DEBUG_SERVER = getExt(rootProject, "DEBUG_SERVER")
 def RELEASE_SERVER = getExt(rootProject, "RELEASE_SERVER")
-println(DEBUG_SERVER)
 ////单个项目内的设置
-def isRunAtApp = project.ext.has("isRunAtApp")
-def projectName = project.getName()
 def runAppId = getExt(project, "runAppId")
+def projectName = project.getName()
 //全局和单个项目内结合的便利
 def isMainModular = projectName == mainNodular
 def otherDependency = getExt(rootProject, projectName + "Dependencys")
+
 //从local.properties读取参数
 Properties localProperties = new Properties()
 try {
@@ -53,11 +63,23 @@ try {
 } catch (Exception ignored) {
     println("local.properties not found")
 }
+def nowRunTypeKey = projectName + "RunApp"
+def isRunAtApp = getProp(localProperties, nowRunTypeKey)
+def isBuildAll = getProp(localProperties, "isBuildAll")
 
-if (isRunAtApp) {
+//println("isRunAtApp:$isRunAtApp")
 
-}
 isRunAtApp = isMainModular || isRunAtApp;
+//println("isMainModular:$isMainModular")
+//println(isMainModular || isRunAtApp)
+//println("isBuildAll:$isBuildAll")
+if (isBuildAll) {
+    if (!isMainModular) {
+        isRunAtApp = false
+    }
+}
+
+//println("----------------$projectName      $isRunAtApp        $runAppId        $nowRunTypeKey   $isBuildAll")
 if (isRunAtApp) {
     apply plugin: 'com.android.application'
     nilError(project, "runAppId", projectName + " must set runAppId like \'ext.runAppId=you.app.id\'")
@@ -92,6 +114,8 @@ android {
             versionCode 1
             versionName "1.0"
         }
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -99,6 +123,8 @@ android {
         main {
             //默认的作为application运行时Manifest文件路径
             def debugManifest = 'src/main/debug/AndroidManifest.xml'
+            println(isRunAtApp)
+            println(project.file(debugManifest).exists())
             if (isRunAtApp && project.file(debugManifest).exists()) {
                 manifest.srcFile debugManifest
             } else {
@@ -175,12 +201,26 @@ dependencies {
             } else {
                 if (v.startsWith("ap:")) {
                     v = v.replace("ap:", ":")
-                    println(v)
                     annotationProcessor project(path: "$v")
                 } else {
-                    implementation project(path: "$v")
+                    if (isMainModular && !isBuildAll) {
+                        def canImplementation = true
+                        def k = v.replace(":", "")
+                        k += "RunApp"
+                        def modelIsRunApp = getProp(localProperties, k)
+                        if (modelIsRunApp) {
+                            canImplementation = false
+                        }
+                        if (canImplementation)
+                            implementation project(path: "$v")
+                    } else {
+                        implementation project(path: "$v")
+                    }
                 }
             }
         }
     }
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

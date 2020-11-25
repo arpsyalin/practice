@@ -35,8 +35,10 @@ ext {
     loginDependencys = [
             ':arouter',
             ':arouter-annotations',
-            'ap:arouter-compiler',
             ':butterknife',
+            ":butterknife-annotations",
+            'ap:butterknife-compiler',
+            'ap:arouter-compiler',
             ":arouter-constant"
     ]
     networkDependencys = [

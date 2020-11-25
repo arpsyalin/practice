@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".debug.DebugActivity">
 
+    <Button
+        android:id="@+id/btn_testJump"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="跳转到登录"></Button>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

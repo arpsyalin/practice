@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity implements IView<String> {
     @OnClick(R.id.btn_to_main)
     public void jumpMain(View v) {
         ARouter.getInstance().jumpActivity(this, ARouterConstant.MAINACTIVITY);
-        DealFactory.getInstance().request(this, DealFactory.getInstance().clone(), String.class);
+//        DealFactory.getInstance().request(this, DealFactory.getInstance().clone(), String.class);
     }
 
 
