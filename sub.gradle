@@ -41,11 +41,12 @@ def compileSdk = rootProject.ext.get("compileSdkVersion")
 def buildTools = rootProject.ext.get("buildToolsVersion")
 def vCode = getExt(rootProject, "versionCode")
 def vName = getExt(rootProject, "versionName")
+def needTest = getExt(rootProject, "importTest")
 def minVersion = getExt(rootProject, "minSdkVersion")
-def subComponentProject = getExt(rootProject, "other")
 def rootDependency = getExt(rootProject, "dependencys")
 def DEBUG_SERVER = getExt(rootProject, "DEBUG_SERVER")
 def RELEASE_SERVER = getExt(rootProject, "RELEASE_SERVER")
+if (needTest == null) needTest = true
 ////单个项目内的设置
 def runAppId = getExt(project, "runAppId")
 def projectName = project.getName()
@@ -114,8 +115,8 @@ android {
             versionCode 1
             versionName "1.0"
         }
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        if (needTest)
+            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -220,7 +221,9 @@ dependencies {
             }
         }
     }
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    if (needTest) {
+        testImplementation 'junit:junit:4.12'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    }
 }

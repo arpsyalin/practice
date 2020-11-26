@@ -1,3 +1,4 @@
+include ':pluginmanage'
 rootProject.name = 'practice'
 include ':app'
 include ':login'

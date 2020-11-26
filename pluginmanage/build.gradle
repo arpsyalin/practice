@@ -1,2 +1,2 @@
-ext { runAppId = "com.lyl.andfix" }
+ext { runAppId = "com.lyl.pluginmanage" }
 apply from: rootProject.file('sub.gradle')

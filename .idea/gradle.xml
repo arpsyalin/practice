@@ -24,6 +24,7 @@
             <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/media" />
             <option value="$PROJECT_DIR$/network" />
+            <option value="$PROJECT_DIR$/pluginmanage" />
             <option value="$PROJECT_DIR$/skin" />
           </set>
         </option>
