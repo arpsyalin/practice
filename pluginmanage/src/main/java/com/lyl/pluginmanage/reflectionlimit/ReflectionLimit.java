@@ -172,7 +172,7 @@ public final class ReflectionLimit {
     //  }
     //   Runtime::Current()->SetHiddenApiExemptions(exemptions_vec);
     // }
-    // 得出结论最简单的方法就是直接反射 invoke setHiddenApiExemptions
+    // 得出结论最简单可以直接反射 invoke setHiddenApiExemptions
     private static Object sVMRuntime;
     private static Method setHiddenApiExemptions;
 
@@ -181,13 +181,13 @@ public final class ReflectionLimit {
             try {
                 Method forName = Class.class.getDeclaredMethod("forName", String.class);
                 Method getDeclaredMethod = Class.class.getDeclaredMethod("getDeclaredMethod", String.class, Class[].class);
-                Class vmRuntimeClass = (Class) forName.invoke(null, "dalvik.system.VMRuntime");
+                Class<?> vmRuntimeClass = (Class<?>) forName.invoke(null, "dalvik.system.VMRuntime");
                 Method getRuntime = (Method) getDeclaredMethod.invoke(vmRuntimeClass, "getRuntime", null);
-                setHiddenApiExemptions = vmRuntimeClass.getMethod("setHiddenApiExemptions", String[].class);
+                setHiddenApiExemptions = (Method) getDeclaredMethod.invoke(vmRuntimeClass, "setHiddenApiExemptions", new Class[]{String[].class});
                 setHiddenApiExemptions.setAccessible(true);
                 sVMRuntime = getRuntime.invoke(null);
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         }
     }
@@ -198,7 +198,7 @@ public final class ReflectionLimit {
             return false;
         }
         try {
-            setHiddenApiExemptions.invoke(sVMRuntime, new String[]{"L"});
+            setHiddenApiExemptions.invoke(sVMRuntime, new Object[]{new String[]{"L"}});
             return true;
         } catch (Exception e) {
             e.printStackTrace();
