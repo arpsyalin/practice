@@ -2,11 +2,10 @@ ext {
     main = "app"
 //    compileSdkVersion = 30
 //    buildToolsVersion = '30.0.2'
-//    compileSdkVersion = 29
-//    buildToolsVersion = '29.0.3'
-    compileSdkVersion = 28
-    buildToolsVersion = '28.0.3'
-    appcompatVersion = '1.1.0'
+    compileSdkVersion = 29
+    buildToolsVersion = '29.0.3'
+//    compileSdkVersion = 28
+//    buildToolsVersion = '28.0.3'
     DEBUG_SERVER = "192.168.1.100"
     RELEASE_SERVER = "192.168.1.100"
     dependencys = [

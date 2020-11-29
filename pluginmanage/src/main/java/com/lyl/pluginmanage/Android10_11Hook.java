@@ -2,22 +2,78 @@ package com.lyl.pluginmanage;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
+import android.util.Log;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.List;
+
+import me.weishu.reflection.Reflection;
+//import android.app.IActivityTaskManager;
 
 //api 29-30
 public class Android10_11Hook implements IAndroidHook {
+//    private static final Singleton<IActivityTaskManager> IActivityTaskManagerSingleton =
+//            new Singleton<IActivityTaskManager>() {
+//                @Override
+//                protected IActivityTaskManager create() {
+//                    final IBinder b = ServiceManager.getService(Context.ACTIVITY_TASK_SERVICE);
+//                    return IActivityTaskManager.Stub.asInterface(b);
+//                }
+//            };
 
     @Override
     public void hookAms(Application application) throws Exception {
+        Reflection.unseal(application);
+//        https://www.androidos.net.cn/android/10.0.0_r6/xref/frameworks/base/core/java/android/app/IActivityTaskManager.aidl
+//        int startActivity(in IApplicationThread caller, in String callingPackage, in Intent intent,
+//        in String resolvedType, in IBinder resultTo, in String resultWho, int requestCode,
+//        int flags, in ProfilerInfo profilerInfo, in Bundle options);
+////      尝试从ServiceManager里面反射出一个
+//        Class mServiceManagerClass = Class.forName("android.os.ServiceManager");
+//        Method mGetServiceManagerMethod = mServiceManagerClass.getDeclaredMethod("getService", new Class[]{String.class});
+//        mGetServiceManagerMethod.setAccessible(true);
+//        final Object mIActivityManager1 = mGetServiceManagerMethod.invoke(null, "activity_task");
+//        Class mStubClass = Class.forName("android.app.IActivityTaskManager$Stub");
+//        Class mIBinderClass = Class.forName("android.os.BinderProxy");
+//        Method mAsInterfaceMethod = mIBinderClass.getDeclaredMethod("queryLocalInterface", new Class[]{String.class});
+//        mAsInterfaceMethod.setAccessible(true);
+//        final Object mIActivityManager = mAsInterfaceMethod.invoke(mIActivityManager1, "activity_task");
+//        //尝试从ServiceManager里面反射出一个失败
+        //todo 这里反射获取不到 getService 原因：Android 9.0 私有API禁用机制
+        // https://www.androidos.net.cn/android/10.0.0_r6/xref/art/runtime/runtime.h
+        // https://www.androidos.net.cn/android/10.0.0_r6/xref/art/runtime/hidden_api.h
+        // https://www.androidos.net.cn/android/10.0.0_r6/xref/art/runtime/native/java_lang_Class.cc
+        // private native Method getDeclaredMethodInternal(String name, Class<?>[] args);
+        // static jobject Class_getDeclaredMethodInternal(JNIEnv* env, jobject javaThis,
+        //                                               jstring name, jobjectArray args) {
+        //  ScopedFastNativeObjectAccess soa(env);
+        //  StackHandleScope<1> hs(soa.Self());
+        //  DCHECK_EQ(Runtime::Current()->GetClassLinker()->GetImagePointerSize(), kRuntimePointerSize);
+        //  DCHECK(!Runtime::Current()->IsActiveTransaction());
+        //  Handle<mirror::Method> result = hs.NewHandle(
+        //      mirror::Class::GetDeclaredMethodInternal<kRuntimePointerSize, false>(
+        //          soa.Self(),
+        //          DecodeClass(soa, javaThis),
+        //          soa.Decode<mirror::String>(name),
+        //          soa.Decode<mirror::ObjectArray<mirror::Class>>(args),
+        //          GetHiddenapiAccessContextFunction(soa.Self())));
+        //  if (result == nullptr || ShouldDenyAccessToMember(result->GetArtMethod(), soa.Self())) {
+        //    return nullptr;
+        //  }
+        //  return soa.AddLocalReference<jobject>(result.Get());
+        //}
         Class mIActivityTaskManagerClass = Class.forName("android.app.IActivityTaskManager");
         Class mActivityTaskManagerClass = Class.forName("android.app.ActivityTaskManager");
-        @SuppressLint("BlockedPrivateApi") Method mGetServiceMethod = mActivityTaskManagerClass.getDeclaredMethod("getService");
+        Method mGetServiceMethod = mActivityTaskManagerClass.getDeclaredMethod("getService", new Class[]{});
+//        mGetServiceMethod.setAccessible(true);
         final Object mIActivityManager = mGetServiceMethod.invoke(null);
         Object replaceIActivityManager = Proxy.newProxyInstance(application.getClassLoader(), new Class[]{mIActivityTaskManagerClass}, new InvocationHandler() {
             @Override
@@ -38,7 +94,7 @@ public class Android10_11Hook implements IAndroidHook {
         Class mSingletonClass = Class.forName("android.util.Singleton");
         Field mSingletonField = mSingletonClass.getDeclaredField("mInstance");
         mSingletonField.setAccessible(true);
-
+//        Field mIActivityManagerSingletonField = mActivityTaskManagerClass.getDeclaredField("IActivityManagerSingleton");
         Field mIActivityManagerSingletonField = mActivityTaskManagerClass.getDeclaredField("IActivityTaskManagerSingleton");
         mIActivityManagerSingletonField.setAccessible(true);
         Object mIActivityManagerSingleton = mIActivityManagerSingletonField.get(null);
@@ -47,11 +103,57 @@ public class Android10_11Hook implements IAndroidHook {
 
     @Override
     public void hookActivityThread(Application application) throws Exception {
-
+        //https://www.androidos.net.cn/android/10.0.0_r6/xref/frameworks/base/core/java/android/app/ActivityThread.java
+        Class mActivityThreadClass = Class.forName("android.app.ActivityThread");
+        Object mActivityThread = mActivityThreadClass.getMethod("currentActivityThread").invoke(null);
+        Field mHField = mActivityThreadClass.getDeclaredField("mH");
+        mHField.setAccessible(true);
+        Object mH = mHField.get(mActivityThread);
+//        final Handler.Callback mCallback;
+        Field mCallbackField = Handler.class.getDeclaredField("mCallback");
+        mCallbackField.setAccessible(true);
+        //自己处理handleMessage
+        mCallbackField.set(mH, this);
     }
 
     @Override
     public boolean handleMessage(Message msg) {
+        if (Constants.EXECUTE_TRANSACTION == msg.what) {
+//        case EXECUTE_TRANSACTION:
+//        final ClientTransaction transaction = (ClientTransaction) msg.obj;
+//        mTransactionExecutor.execute(transaction);
+            Object mClientTransaction = msg.obj;
+            try {
+                // Field mActivityCallbacksField = mClientTransaction.getClass().getDeclaredField("mActivityCallbacks");
+                Class<?> mClientTransactionClass = Class.forName("android.app.servertransaction.ClientTransaction");
+                Field mActivityCallbacksField = mClientTransactionClass.getDeclaredField("mActivityCallbacks");
+                mActivityCallbacksField.setAccessible(true);
+                // List<ClientTransactionItem> mActivityCallbacks;
+                List mActivityCallbacks = (List) mActivityCallbacksField.get(mClientTransaction);
+                // TODO 需要判断
+                if (mActivityCallbacks.size() == 0) {
+                    return false;
+                }
+                Object mLaunchActivityItem = mActivityCallbacks.get(0);
+
+                Class mLaunchActivityItemClass = Class.forName("android.app.servertransaction.LaunchActivityItem");
+                // TODO 需要判断
+                if (!mLaunchActivityItemClass.isInstance(mLaunchActivityItem)) {
+                    return false;
+                }
+                Field mIntentField = mLaunchActivityItemClass.getDeclaredField("mIntent");
+                mIntentField.setAccessible(true);
+                // 拿到真实的Intent
+                Intent proxyIntent = (Intent) mIntentField.get(mLaunchActivityItem);
+                Intent targetIntent = proxyIntent.getParcelableExtra(Constants.TMP_TARGET_INTENT);
+                if (targetIntent != null) {
+                    //把存起来的targetIntent换回来完成跳转
+                    mIntentField.set(mLaunchActivityItem, targetIntent);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return false;
     }
 }

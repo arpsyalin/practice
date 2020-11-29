@@ -61,6 +61,7 @@ public class Android8_9Hook implements IAndroidHook {
         Object mH = mHField.get(mActivityThread);
         Field mCallbackField = Handler.class.getDeclaredField("mCallback");
         mCallbackField.setAccessible(true);
+        //自己处理handleMessage
         mCallbackField.set(mH, this);
     }
 
@@ -70,7 +71,6 @@ public class Android8_9Hook implements IAndroidHook {
                 /*final ClientTransaction transaction = (ClientTransaction) msg.obj;
                 mTransactionExecutor.execute(transaction);*/
             Object mClientTransaction = msg.obj;
-
             try {
                 // Field mActivityCallbacksField = mClientTransaction.getClass().getDeclaredField("mActivityCallbacks");
                 Class<?> mClientTransactionClass = Class.forName("android.app.servertransaction.ClientTransaction");
@@ -78,35 +78,29 @@ public class Android8_9Hook implements IAndroidHook {
                 mActivityCallbacksField.setAccessible(true);
                 // List<ClientTransactionItem> mActivityCallbacks;
                 List mActivityCallbacks = (List) mActivityCallbacksField.get(mClientTransaction);
-
                 // TODO 需要判断
                 if (mActivityCallbacks.size() == 0) {
                     return false;
                 }
-
                 Object mLaunchActivityItem = mActivityCallbacks.get(0);
 
                 Class mLaunchActivityItemClass = Class.forName("android.app.servertransaction.LaunchActivityItem");
-
                 // TODO 需要判断
                 if (!mLaunchActivityItemClass.isInstance(mLaunchActivityItem)) {
                     return false;
                 }
-
                 Field mIntentField = mLaunchActivityItemClass.getDeclaredField("mIntent");
                 mIntentField.setAccessible(true);
-
-                // @2 需要拿到真实的Intent
+                // 拿到真实的Intent
                 Intent proxyIntent = (Intent) mIntentField.get(mLaunchActivityItem);
-                Log.d("hook", "proxyIntent:" + proxyIntent);
                 Intent targetIntent = proxyIntent.getParcelableExtra(Constants.TMP_TARGET_INTENT);
                 if (targetIntent != null) {
+                    //把存起来的targetIntent换回来完成跳转
                     mIntentField.set(mLaunchActivityItem, targetIntent);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
         return false;
     }
