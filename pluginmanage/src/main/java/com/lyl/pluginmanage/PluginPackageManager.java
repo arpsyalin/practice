@@ -2,12 +2,10 @@ package com.lyl.pluginmanage;
 
 
 import android.app.Application;
-import android.content.Intent;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
+import com.lyl.pluginmanage.hookv.Android10_11Hook;
+import com.lyl.pluginmanage.hookv.Android5_7Hook;
+import com.lyl.pluginmanage.hookv.Android8_9Hook;
 
 /**
  * * @Description 插件包管理封装

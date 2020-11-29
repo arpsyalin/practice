@@ -1,4 +1,4 @@
-package com.lyl.pluginmanage;
+package com.lyl.pluginmanage.hookv;
 
 import android.app.Application;
 import android.content.ComponentName;
@@ -7,10 +7,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.lyl.pluginmanage.Constants;
+import com.lyl.pluginmanage.IAndroidHook;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.lang.reflect.Proxy;
 import java.util.List;
 

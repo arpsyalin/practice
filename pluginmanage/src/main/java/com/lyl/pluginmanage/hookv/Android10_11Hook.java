@@ -1,4 +1,4 @@
-package com.lyl.pluginmanage;
+package com.lyl.pluginmanage.hookv;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
@@ -9,13 +9,15 @@ import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
 
+import com.lyl.pluginmanage.Constants;
+import com.lyl.pluginmanage.IAndroidHook;
+import com.lyl.pluginmanage.reflectionlimit.ReflectionLimit;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.List;
-
-import me.weishu.reflection.Reflection;
 //import android.app.IActivityTaskManager;
 
 //api 29-30
@@ -31,7 +33,7 @@ public class Android10_11Hook implements IAndroidHook {
 
     @Override
     public void hookAms(Application application) throws Exception {
-        Reflection.unseal(application);
+        ReflectionLimit.clearLimit();
 //        https://www.androidos.net.cn/android/10.0.0_r6/xref/frameworks/base/core/java/android/app/IActivityTaskManager.aidl
 //        int startActivity(in IApplicationThread caller, in String callingPackage, in Intent intent,
 //        in String resolvedType, in IBinder resultTo, in String resultWho, int requestCode,
@@ -47,29 +49,6 @@ public class Android10_11Hook implements IAndroidHook {
 //        mAsInterfaceMethod.setAccessible(true);
 //        final Object mIActivityManager = mAsInterfaceMethod.invoke(mIActivityManager1, "activity_task");
 //        //尝试从ServiceManager里面反射出一个失败
-        //todo 这里反射获取不到 getService 原因：Android 9.0 私有API禁用机制
-        // https://www.androidos.net.cn/android/10.0.0_r6/xref/art/runtime/runtime.h
-        // https://www.androidos.net.cn/android/10.0.0_r6/xref/art/runtime/hidden_api.h
-        // https://www.androidos.net.cn/android/10.0.0_r6/xref/art/runtime/native/java_lang_Class.cc
-        // private native Method getDeclaredMethodInternal(String name, Class<?>[] args);
-        // static jobject Class_getDeclaredMethodInternal(JNIEnv* env, jobject javaThis,
-        //                                               jstring name, jobjectArray args) {
-        //  ScopedFastNativeObjectAccess soa(env);
-        //  StackHandleScope<1> hs(soa.Self());
-        //  DCHECK_EQ(Runtime::Current()->GetClassLinker()->GetImagePointerSize(), kRuntimePointerSize);
-        //  DCHECK(!Runtime::Current()->IsActiveTransaction());
-        //  Handle<mirror::Method> result = hs.NewHandle(
-        //      mirror::Class::GetDeclaredMethodInternal<kRuntimePointerSize, false>(
-        //          soa.Self(),
-        //          DecodeClass(soa, javaThis),
-        //          soa.Decode<mirror::String>(name),
-        //          soa.Decode<mirror::ObjectArray<mirror::Class>>(args),
-        //          GetHiddenapiAccessContextFunction(soa.Self())));
-        //  if (result == nullptr || ShouldDenyAccessToMember(result->GetArtMethod(), soa.Self())) {
-        //    return nullptr;
-        //  }
-        //  return soa.AddLocalReference<jobject>(result.Get());
-        //}
         Class mIActivityTaskManagerClass = Class.forName("android.app.IActivityTaskManager");
         Class mActivityTaskManagerClass = Class.forName("android.app.ActivityTaskManager");
         Method mGetServiceMethod = mActivityTaskManagerClass.getDeclaredMethod("getService", new Class[]{});
