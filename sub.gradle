@@ -64,7 +64,7 @@ try {
 } catch (Exception ignored) {
     println("local.properties not found")
 }
-def nowRunTypeKey = projectName + "RunApp"
+def nowRunTypeKey = projectName //+ "RunApp"
 def isRunAtApp = getProp(localProperties, nowRunTypeKey)
 def isBuildAll = getProp(localProperties, "isBuildAll")
 
