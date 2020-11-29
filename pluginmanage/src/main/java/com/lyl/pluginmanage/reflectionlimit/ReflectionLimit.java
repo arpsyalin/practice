@@ -138,6 +138,7 @@ public final class ReflectionLimit {
     //  kEnabled              = 2,  // ban dark grey & blacklist
     //  kMax = kEnabled,
     // };
+    // 上面得出结论，可以通过JNI找到这个类的实例，通过仿写一个结构体，然后指针替换赋值一下。于是找这个相关联的实例。
     // //-----------------------------------
     // https://www.androidos.net.cn/android/10.0.0_r6/xref/libcore/libart/src/main/java/dalvik/system/VMRuntime.java
     //  private static final VMRuntime THE_ONE = new VMRuntime();
