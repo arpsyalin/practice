@@ -23,7 +23,7 @@ public class DebugActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
-        Button button = findViewById(R.id.btn_test);
+        Button button = (Button) findViewById(R.id.btn_test);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
