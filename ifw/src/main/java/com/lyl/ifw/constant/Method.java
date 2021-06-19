@@ -1,4 +1,4 @@
-package com.lyl.ifw;
+package com.lyl.ifw.constant;
 
 /**
  * * @Description 请求类型

@@ -1,4 +1,6 @@
-package com.lyl.ifw;
+package com.lyl.ifw.netframeapi;
+
+import com.lyl.ifw.RequestMapBuilder;
 
 /**
  * * @Description 网络回调
@@ -9,4 +11,5 @@ package com.lyl.ifw;
  **/
 public interface INetworkCallBack {
     void netCallBack(int fail, RequestMapBuilder requestMapBuilder, String o);
+    void netUserCancel(RequestMapBuilder requestMapBuilder);
 }

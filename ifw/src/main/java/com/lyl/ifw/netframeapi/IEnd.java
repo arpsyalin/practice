@@ -1,4 +1,4 @@
-package com.lyl.ifw;
+package com.lyl.ifw.netframeapi;
 
 /**
  * * @Description 结束
@@ -8,5 +8,5 @@ package com.lyl.ifw;
  * * @Remark TODO
  **/
 public interface IEnd {
-    void onEnd();
+    void onEnd(IRequestMapBuilder requestParam);
 }

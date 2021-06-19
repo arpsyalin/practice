@@ -1,4 +1,4 @@
-package com.lyl.ifw;
+package com.lyl.ifw.netframeapi;
 
 /**
  * * @Description 网络接口
@@ -8,6 +8,5 @@ package com.lyl.ifw;
  * * @Remark TODO
  **/
 public interface INetwork extends IRequest, IResponse {
-
 
 }

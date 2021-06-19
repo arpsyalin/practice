@@ -1,4 +1,4 @@
-package com.lyl.ifw;
+package com.lyl.ifw.utils;
 
 /**
  * * @Description 单例

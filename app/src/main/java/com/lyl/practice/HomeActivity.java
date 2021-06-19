@@ -12,11 +12,11 @@ import com.lyl.arouter.constant.ARouterConstant;
 import com.lyl.butterknife.ButterKnife;
 import com.lyl.butterknife.annotations.BindView;
 import com.lyl.butterknife.annotations.OnClick;
-import com.lyl.ifw.DealFactory;
-import com.lyl.ifw.IView;
+import com.lyl.ifw.netframeapi.IRequestCallBack;
 import com.lyl.ifw.RequestMapBuilder;
+import com.lyl.ifw.netframeapi.IRequestMapBuilder;
 
-public class HomeActivity extends AppCompatActivity implements IView<String> {
+public class HomeActivity extends AppCompatActivity implements IRequestCallBack<String> {
     @BindView(R.id.btn_to_main)
     Button mJumpMain;
 
@@ -35,12 +35,22 @@ public class HomeActivity extends AppCompatActivity implements IView<String> {
 
 
     @Override
-    public void notifyResult(final int resultCode, RequestMapBuilder requestMapBuilder, final String callBackData) {
+    public void notifyResult(final int resultCode, RequestMapBuilder requestMapBuilder, final Object callBackData) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(HomeActivity.this, "1111" + resultCode + ";" + callBackData, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onEnd(IRequestMapBuilder requestParam) {
+
+    }
+
+    @Override
+    public void onStart(IRequestMapBuilder requestParam) {
+
     }
 }

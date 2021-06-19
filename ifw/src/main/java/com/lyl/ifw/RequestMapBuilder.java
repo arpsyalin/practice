@@ -2,27 +2,34 @@ package com.lyl.ifw;
 
 import android.text.TextUtils;
 
+import com.lyl.ifw.netframeapi.IRequestMapBuilder;
+import com.lyl.ifw.constant.Method;
+import com.lyl.ifw.utils.SnowflakeIdWorker;
+
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 
 /**
- * * @Description 请求Map构建
+ * * @Description 请求Map构建例子
  * * @Author 刘亚林
  * * @CreateDate 2020/10/29
  * * @Version 1.0
  * * @Remark TODO
  **/
-public class RequestMapBuilder implements Cloneable {
-    HashMap<String, String> body = new HashMap();
-    HashMap<String, String> head = new HashMap();
+public class RequestMapBuilder implements IRequestMapBuilder {
+    HashMap<String, Object> body = new HashMap();
+    HashMap<String, Object> head = new HashMap();
     Method method = Method.GET;
     String baseUrl;
     String actionUrl;
+    long requestId;
     int type;
     boolean needAop;
+    boolean useCache = true;
 
     private RequestMapBuilder() {
+        requestId = SnowflakeIdWorker.getInstance().nextId();
     }
 
     public static RequestMapBuilder build() {
@@ -31,7 +38,7 @@ public class RequestMapBuilder implements Cloneable {
 
     @NonNull
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         RequestMapBuilder requestMapBuilder = new RequestMapBuilder();
         requestMapBuilder.baseUrl = baseUrl;
         requestMapBuilder.head = head;
@@ -40,22 +47,28 @@ public class RequestMapBuilder implements Cloneable {
         requestMapBuilder.actionUrl = null;
         requestMapBuilder.type = type;
         requestMapBuilder.needAop = needAop;
+        requestMapBuilder.useCache = useCache;
         return requestMapBuilder;
     }
 
-    public HashMap<String, String> getBody() {
+    @Override
+    public long getRequestId() {
+        return requestId;
+    }
+
+    public HashMap<String, Object> getBody() {
         return body;
     }
 
-    public void setBody(HashMap<String, String> body) {
+    public void setBody(HashMap<String, Object> body) {
         this.body = body;
     }
 
-    public HashMap<String, String> getHead() {
+    public HashMap<String, Object> getHead() {
         return head;
     }
 
-    public void setHead(HashMap<String, String> head) {
+    public void setHead(HashMap<String, Object> head) {
         this.head = head;
     }
 
@@ -99,6 +112,14 @@ public class RequestMapBuilder implements Cloneable {
         this.needAop = needAop;
     }
 
+    public boolean isUseCache() {
+        return useCache;
+    }
+
+    public void setUseCache(boolean useCache) {
+        this.useCache = useCache;
+    }
+
     public String getRequestUrl() {
         if (TextUtils.isEmpty(baseUrl) && TextUtils.isEmpty(actionUrl)) {
             return null;
@@ -120,11 +141,14 @@ public class RequestMapBuilder implements Cloneable {
     @Override
     public String toString() {
         return "RequestMapBuilder{" +
-                "body=" + body.toString() +
+                "body=" + body +
                 ", head=" + head +
                 ", method=" + method +
                 ", baseUrl='" + baseUrl + '\'' +
                 ", actionUrl='" + actionUrl + '\'' +
+                ", type=" + type +
+                ", needAop=" + needAop +
+                ", useCache=" + useCache +
                 '}';
     }
 }

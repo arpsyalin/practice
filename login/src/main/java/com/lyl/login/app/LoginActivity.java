@@ -20,12 +20,12 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(value = R.id.btn_loginSuccess)
+//    @OnClick(value = R.id.btn_loginSuccess)
     public void onLoginSuccessCallBack(View v) {
 
     }
 
-    @OnClick(value = R.id.btn_loginFail)
+//    @OnClick(value = R.id.btn_loginFail)
     public void onLoginFailCallBack(View v) {
 
     }

@@ -1,4 +1,4 @@
-package com.lyl.ifw;
+package com.lyl.ifw.netframeapi;
 
 /**
  * * @Description 开始
@@ -8,5 +8,5 @@ package com.lyl.ifw;
  * * @Remark TODO
  **/
 public interface IStart {
-    void onStart();
+    void onStart(IRequestMapBuilder requestParam);
 }

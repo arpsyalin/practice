@@ -1,23 +1,15 @@
 package com.lyl.network;
 
-import android.text.TextUtils;
-
-import com.lyl.ifw.DealFactory;
-import com.lyl.ifw.IJsonAnalysis;
-import com.lyl.ifw.INetwork;
-import com.lyl.ifw.INetworkCallBack;
-import com.lyl.ifw.IRequestAop;
-import com.lyl.ifw.IView;
-import com.lyl.ifw.Method;
+import com.lyl.ifw.netframeapi.INetwork;
+import com.lyl.ifw.netframeapi.INetworkCallBack;
+import com.lyl.ifw.constant.Method;
 import com.lyl.ifw.RequestMapBuilder;
-import com.lyl.ifw.ResponseCode;
+import com.lyl.ifw.constant.ResponseCode;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,12 +32,12 @@ import okhttp3.ResponseBody;
 public class OkHttpNetwork implements INetwork {
 
     @Override
-    public void request(final INetworkCallBack networkCallBack, final RequestMapBuilder requestMapBuilder) {
+    public void request(final RequestMapBuilder requestMapBuilder, final INetworkCallBack networkCallBack) {
         OkHttpClient client = new OkHttpClient();
         Request.Builder request = new Request.Builder().url(requestMapBuilder.getRequestUrl());
-        Set<Map.Entry<String, String>> entrySet = requestMapBuilder.getHead().entrySet();
-        for (Map.Entry<String, String> entry : entrySet) {
-            request.addHeader(entry.getKey(), entry.getValue());
+        Set<Map.Entry<String, Object>> entrySet = requestMapBuilder.getHead().entrySet();
+        for (Map.Entry<String, Object> entry : entrySet) {
+            request.addHeader(entry.getKey(), String.valueOf(entry.getValue()));
         }
         RequestBody requestBody;
         if (requestMapBuilder.getMethod() != Method.GET) {
