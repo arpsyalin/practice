@@ -1,6 +1,6 @@
 package com.lyl.ifw.netframeapi;
 
-import com.lyl.ifw.RequestMapBuilder;
+import com.lyl.ifw.netexample.RequestMapBuilder;
 
 /**
  * * @Description 请求

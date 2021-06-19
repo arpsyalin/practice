@@ -3,7 +3,7 @@ package com.lyl.network;
 import com.lyl.ifw.netframeapi.INetwork;
 import com.lyl.ifw.netframeapi.INetworkCallBack;
 import com.lyl.ifw.constant.Method;
-import com.lyl.ifw.RequestMapBuilder;
+import com.lyl.ifw.netexample.RequestMapBuilder;
 import com.lyl.ifw.constant.ResponseCode;
 
 import org.jetbrains.annotations.NotNull;

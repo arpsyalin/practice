@@ -13,7 +13,7 @@ import com.lyl.butterknife.ButterKnife;
 import com.lyl.butterknife.annotations.BindView;
 import com.lyl.butterknife.annotations.OnClick;
 import com.lyl.ifw.netframeapi.IRequestCallBack;
-import com.lyl.ifw.RequestMapBuilder;
+import com.lyl.ifw.netexample.RequestMapBuilder;
 import com.lyl.ifw.netframeapi.IRequestMapBuilder;
 
 public class HomeActivity extends AppCompatActivity implements IRequestCallBack<String> {

@@ -3,9 +3,9 @@ package com.lyl.practice;
 import android.app.Application;
 
 import com.lyl.arouter.ARouter;
-import com.lyl.ifw.DealFactory;
+import com.lyl.ifw.netexample.DealFactory;
 import com.lyl.ifw.netframeapi.IDataAnalysis;
-import com.lyl.ifw.RequestMapBuilder;
+import com.lyl.ifw.netexample.RequestMapBuilder;
 import com.lyl.network.OkHttpNetwork;
 
 /**
