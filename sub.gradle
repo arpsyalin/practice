@@ -80,7 +80,7 @@ if (isBuildAll) {
     }
 }
 
-//println("----------------$projectName      $isRunAtApp        $runAppId        $nowRunTypeKey   $isBuildAll")
+println("模块：$projectName  可运行？:  $isRunAtApp    运行包名配置：    $runAppId    Key：    $nowRunTypeKey  全局编译： $isBuildAll")
 if (isRunAtApp) {
     apply plugin: 'com.android.application'
     nilError(project, "runAppId", projectName + " must set runAppId like \'ext.runAppId=you.app.id\'")

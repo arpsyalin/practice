@@ -50,4 +50,13 @@ ext {
             "com.squareup.okhttp3:okhttp:4.9.0",
             ':ifw'
     ]
+    jpushDependencys = [
+            ':arouter',
+            ':arouter-annotations',
+            ':butterknife',
+            ":butterknife-annotations",
+            'ap:butterknife-compiler',
+            'ap:arouter-compiler',
+            ":arouter-constant"
+    ]
 }

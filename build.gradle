@@ -7,12 +7,18 @@ buildscript {
 //        jcenter()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
-
+//        // hms
+//        maven { url 'http://developer.huawei.com/repo/'}
+//        // fcm
+//        maven { url "https://maven.google.com" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+//        classpath 'com.google.gms:google-services:4.3.4'
+//        // hms
+//        classpath 'com.huawei.agconnect:agcp:1.4.1.300'
     }
 }
 
@@ -22,6 +28,9 @@ allprojects {
 //        jcenter()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+//        maven {url 'http://developer.huawei.com/repo/'}
+//        //fcm
+//        maven { url "https://maven.google.com" }
 
     }
 }
