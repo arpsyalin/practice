@@ -1,5 +1,9 @@
 import java.util.regex.Pattern
 
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("GMT+08:00"))
+}
+
 def versionUp = {
     try {
         return (project.gradle.gradleVersion as float) >= 4.1F
@@ -64,6 +68,7 @@ try {
 } catch (Exception ignored) {
     println("local.properties not found")
 }
+
 def nowRunTypeKey = projectName //+ "RunApp"
 def isRunAtApp = getProp(localProperties, nowRunTypeKey)
 def isBuildAll = getProp(localProperties, "isBuildAll")
@@ -87,8 +92,8 @@ if (isRunAtApp) {
 } else {
     apply plugin: 'com.android.library'
 }
-
-//编译设置
+//def curModuleIsBuildingApk = false
+////编译设置
 //def taskNames = project.gradle.startParameter.taskNames
 //def regex = "((.*:)?${project.name.toUpperCase()}:)?((ASSEMBLE)|(INSTALL)|((BUILD)?TINKER)|(RESGUARD)).*"
 //def taskBuildApkPattern = Pattern.compile(regex)
@@ -98,7 +103,16 @@ if (isRunAtApp) {
 //        break
 //    }
 //}
-
+//if (isMainModular && curModuleIsBuildingApk) {
+//    for (Iterator<String> iterator = localProperties.keySet().iterator(); iterator.hasNext();) {
+//        String key = iterator.next();
+//        if (localProperties.get(key)) {
+//            //todo 这里是认为主模块运行需要将所有的模块都设置为库才能运行报错拦截
+//            //todo 这里还需要考虑是否需要如此拦截
+//            throw new Exception("主模块运行,需要把依赖模块，设置为lib运行")
+//        }
+//    }
+//}
 android {
     compileSdkVersion compileSdk
     buildToolsVersion buildTools
@@ -118,6 +132,7 @@ android {
         if (needTest)
             testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+        buildConfigField "String", "BUILD_TIME", '"' + releaseTime() + '"'
     }
 
     sourceSets {
@@ -152,19 +167,33 @@ android {
             }
         }
     }
-
-    buildTypes {
-        debug {
-            if (isRunAtApp && DEBUG_SERVER != null) {
-                buildConfigField("String", "SERVER_URL", "\"${DEBUG_SERVER}\"")
+    if (isRunAtApp) {
+        println("../" + APP_RELEASE_STORE_FILE)
+        signingConfigs {
+            release {
+                storeFile file("../" + APP_RELEASE_STORE_FILE)
+                storePassword APP_RELEASE_STORE_PASSWORD
+                keyAlias APP_RELEASE_KEY_ALIAS
+                keyPassword APP_RELEASE_KEY_PASSWORD
             }
         }
-        release {
-            if (isRunAtApp && RELEASE_SERVER != null) {
-                buildConfigField("String", "SERVER_URL", "\"${RELEASE_SERVER}\"")
+        buildTypes {
+            debug {
+                if (DEBUG_SERVER != null) {
+                    buildConfigField("String", "SERVER_URL", "\"${DEBUG_SERVER}\"")
+                }
+                debuggable true
+                signingConfig signingConfigs.release
             }
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            release {
+                if (RELEASE_SERVER != null) {
+                    buildConfigField("String", "SERVER_URL", "\"${RELEASE_SERVER}\"")
+                }
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+                debuggable true
+                signingConfig signingConfigs.release
+            }
         }
     }
 }

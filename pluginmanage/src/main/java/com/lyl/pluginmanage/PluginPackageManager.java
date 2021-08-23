@@ -46,7 +46,7 @@ public class PluginPackageManager {
         }
 
         if (androidHook == null) {
-            throw new Exception("not support system version");
+            throw new Exception("Unsupported system version");
         }
         androidHook.hookAms(application);
         androidHook.hookActivityThread(application);
