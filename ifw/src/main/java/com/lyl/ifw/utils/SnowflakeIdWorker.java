@@ -5,7 +5,7 @@ package com.lyl.ifw.utils;
  * * @Author 刘亚林
  * * @CreateDate 2021/6/18
  * * @Version 1.0
- * * @Remark TODO
+ * * @Remark TODO 此方法网上找到实际作者不明
  **/
 public class SnowflakeIdWorker {
     public static volatile SnowflakeIdWorker instance;

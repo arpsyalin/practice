@@ -53,6 +53,7 @@ def RELEASE_SERVER = getExt(rootProject, "RELEASE_SERVER")
 if (needTest == null) needTest = true
 ////单个项目内的设置
 def runAppId = getExt(project, "runAppId")
+def jniLibDir = getExt(project, "jniLibDir")
 def projectName = project.getName()
 //全局和单个项目内结合的便利
 def isMainModular = projectName == mainNodular
@@ -137,6 +138,12 @@ android {
 
     sourceSets {
         main {
+            println(jniLibDir)
+            if (jniLibDir != null) {
+                jniLibs.srcDirs = jniLibDir
+            } else {
+                jniLibs.srcDirs = ['libs']
+            }
             //默认的作为application运行时Manifest文件路径
             def debugManifest = 'src/main/debug/AndroidManifest.xml'
             println(isRunAtApp)
@@ -199,6 +206,18 @@ android {
 }
 
 dependencies {
+    def jniLib = android.sourceSets.main.jniLibs.source
+    for (int i = 0; i < jniLib.size; i++) {
+        def filePath = jniLib.get(i)
+        def dir = new File(projectName + "/" + filePath)
+        if (dir.exists()) {
+            dir.traverse(nameFilter: ~/.*\.?ar/
+            ) { file ->
+                def name = file.getName()
+                implementation files(filePath + "/" + name)
+            }
+        }
+    }
     def tmpDependency = new ArrayList<String>()
     if (otherDependency != null)
         tmpDependency.addAll(otherDependency)

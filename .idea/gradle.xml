@@ -20,6 +20,9 @@
             <option value="$PROJECT_DIR$/butterknife-annotations" />
             <option value="$PROJECT_DIR$/butterknife-compiler" />
             <option value="$PROJECT_DIR$/ffmpeg" />
+            <option value="$PROJECT_DIR$/findviewbyid" />
+            <option value="$PROJECT_DIR$/findviewbyid-annotations" />
+            <option value="$PROJECT_DIR$/findviewbyid-compiler" />
             <option value="$PROJECT_DIR$/ifw" />
             <option value="$PROJECT_DIR$/jpush" />
             <option value="$PROJECT_DIR$/libcore" />
