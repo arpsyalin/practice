@@ -1,0 +1,7 @@
+ext { runAppId = "com.lyl.learn" }
+
+apply from: rootProject.file('sub.gradle')
+
+dependencies {
+
+}

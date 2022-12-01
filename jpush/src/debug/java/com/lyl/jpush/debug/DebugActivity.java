@@ -20,7 +20,7 @@ public class DebugActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(value = R.id.btn_testJump)
+//    @OnClick(value = R.id.btn_testJump)
     public void onClick(View view) {
         ARouter.getInstance().jumpActivity(this, ARouterConstant.LOGINACTIVITY);
     }

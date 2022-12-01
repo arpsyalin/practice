@@ -7,15 +7,20 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="Embedded JDK" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Sadness" />
             <option value="$PROJECT_DIR$/andfix" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/arouter" />
             <option value="$PROJECT_DIR$/arouter-annotations" />
             <option value="$PROJECT_DIR$/arouter-compiler" />
             <option value="$PROJECT_DIR$/arouter-constant" />
+            <option value="$PROJECT_DIR$/base_app" />
+            <option value="$PROJECT_DIR$/base_res" />
+            <option value="$PROJECT_DIR$/base_util" />
             <option value="$PROJECT_DIR$/butterknife" />
             <option value="$PROJECT_DIR$/butterknife-annotations" />
             <option value="$PROJECT_DIR$/butterknife-compiler" />
@@ -25,15 +30,16 @@
             <option value="$PROJECT_DIR$/findviewbyid-compiler" />
             <option value="$PROJECT_DIR$/ifw" />
             <option value="$PROJECT_DIR$/jpush" />
+            <option value="$PROJECT_DIR$/learn" />
             <option value="$PROJECT_DIR$/libcore" />
             <option value="$PROJECT_DIR$/login" />
             <option value="$PROJECT_DIR$/media" />
             <option value="$PROJECT_DIR$/network" />
+            <option value="$PROJECT_DIR$/okrf" />
             <option value="$PROJECT_DIR$/pluginmanage" />
             <option value="$PROJECT_DIR$/skin" />
           </set>
         </option>
-        <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
   </component>

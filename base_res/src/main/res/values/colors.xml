@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_default_hint_text">#333333</color>
+    <color name="color_default_input_text">#111111</color>
+    <color name="color_bgColor">#F8F9FC</color>
+    <color name="color_list_item_bgColor">#ffffff</color>
+    <color name="color_list_item_pressed_bgColor">#f1f1f1</color>
+</resources>

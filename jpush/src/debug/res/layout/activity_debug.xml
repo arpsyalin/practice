@@ -10,6 +10,7 @@
         android:id="@id/btn_testJump"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:onClick="onClick"
         android:text="跳转到登录"></Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tv_empty_text" type="id"/>
+    <item name="iv_empty" type="id"/>
+</resources>

@@ -1,0 +1,130 @@
+[
+  {
+    "cn": "打招呼",
+    "en": "Greetings",
+    "enData": [
+      "How are you?",
+      "How do you do?",
+      "How are you doing？",
+      "How's everything？",
+      "How’s it going ?",
+      "I’ve been looking forward to meeting you.",
+      "I have heard (so much) /(a lot) about you.",
+      "Glad/Nice to meet/see you",
+      "Fancy meeting you here!",
+      "Long time no see!",
+      "You look great today",
+      "Give me a hug"
+    ],
+    "cnData": [
+      "你好吗？",
+      "你好吗？",
+      "你好吗？",
+      "一切都好吗？",
+      "进展如何？",
+      "很长以来一直想见见你",
+      "久仰大名",
+      "很高兴见到你",
+      "很高兴在这见到你",
+      "好久不见",
+      "你今天看起来不错",
+      "给我一个拥抱"
+    ]
+  },
+  {
+    "cn": "介绍",
+    "en": "Introduction",
+    "enData": [
+      "I would like to introduce myself. I’m YaLin Liu",
+      "Mary,let me introduce …",
+      "Allow me to introduce….",
+      "May I have you name?",
+      "John,may I introduce Mary to you? ",
+      "I’d like you to meet Mary.",
+      "This is my friend John ",
+      "Can I have your business card?",
+      "Here is my business card. ",
+      "YouYou，this is ChengCheng ，ChengCheng this is YouYou",
+      "Sorry I didn’t catch your name"
+    ],
+    "cnData": [
+      "我想介绍一下我自己，我是刘亚林",
+      "玛丽,让我来介绍一下….",
+      "请允许我介绍一下...",
+      "我可以知道你的名字吗？",
+      "约翰，我可以介绍玛丽给你吗？",
+      "我想你认识一下玛丽",
+      "这是我的朋友约翰",
+      "可以给我你的名片吗？",
+      "这是我的名片",
+      "柚柚这是成成，成成这是柚柚",
+      "对不起我没听清楚你的名字"
+    ]
+  },
+  {
+    "cn": "告别",
+    "en": "Farewells",
+    "enData": [
+      "See you (later) ",
+      "See you soon",
+      "See you tomorrow /next year！",
+      "So long",
+      "Hope to see you again",
+      "I’m afraid that I must be leaving ",
+      "I’m sorry but I have to go now ",
+      "I’ve got to go now ",
+      "Have a pleasant journey",
+      "Have a good journey, and all the best   ",
+      "Take care of yourself and don't forget to keep in touch",
+      "I’m looking forward to see you again",
+      "Remember the good time we shared"
+    ],
+    "cnData": [
+      "回见",
+      "回见",
+      "明天/年见",
+      "再见",
+      "希望再次见到",
+      "恐怕不的不走了",
+      "对不起我要走了",
+      "我现在要走了",
+      "祝你有个愉快的旅程",
+      "旅途愉快，万事如意",
+      "照顾好自己保持联系",
+      "我非常期待能再次见到你",
+      "请记住我们一起分享的美好时光"
+    ]
+  },
+  {
+    "cn": "感谢",
+    "en": "Thanks",
+    "enData": [
+      "Many thanks ",
+      "I’m much obliged to you",
+      "Thanks a lot ",
+      "Thanks ever so much",
+      "I can never thank you enough",
+      "Thank you for all you‘ve done for me ",
+      "Thanks for the trouble you have  taken for me ",
+      "I appreciate you help",
+      "I’m truly grateful for you help",
+      "I couldn’t have done it without you",
+      "You saved my life",
+      "You’re one in a million"
+    ],
+    "cnData": [
+      "多谢",
+      "我非常感激你",
+      "非常感谢",
+      "非常感谢",
+      "怎么感谢你都不为过",
+      "感谢您为我做的一切",
+      "感谢",
+      "我非常感激您的帮助",
+      "非常感谢你的帮助",
+      "没有您我肯定做不好",
+      "你救了我的命",
+      "你是百万里挑一的好人"
+    ]
+  }
+]

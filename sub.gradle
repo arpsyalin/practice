@@ -223,55 +223,61 @@ dependencies {
         tmpDependency.addAll(otherDependency)
     if (rootDependency != null)
         tmpDependency.addAll(rootDependency)
-    //循环添加
-    tmpDependency.each { v ->
-        if (!isRunAtApp) {
-            if (v.split(":").size() == 3) {
-                if (versionUp()) {
-                    api v
-                } else {
-                    compile v
-                }
-            } else {
-                if (v.startsWith("ap:")) {
-                    v = v.replace("ap:", ":")
-                    annotationProcessor project("$v")
-                } else {
-                    if (versionUp()) {
-                        api project(path: "$v")
-                    } else {
-                        compile project(path: "$v")
-                    }
-                }
-            }
-        } else {
-            if (v.split(":").size() == 3) {
-                implementation v
-            } else {
-                if (v.startsWith("ap:")) {
-                    v = v.replace("ap:", ":")
-                    annotationProcessor project(path: "$v")
-                } else {
-                    if (isMainModular && !isBuildAll) {
-                        def canImplementation = true
-                        def k = v.replace(":", "")
-//                        k += "RunApp"
-                        def modelIsRunApp = getProp(localProperties, k)
-                        if (modelIsRunApp) {
-                            canImplementation = false
+    if (!projectName.contains("-annotations") && !projectName.contains("-compiler")) {
+        //循环添加
+        tmpDependency.each { v ->
+            if ("$v" != ":$projectName" && "$v" != "ap:$projectName") {
+                if (!isRunAtApp) {
+                    if (v.split(":").size() == 3) {
+                        if (versionUp()) {
+                            api v
+                        } else {
+                            compile v
                         }
-                        if (canImplementation)
-                            implementation project(path: "$v")
                     } else {
-                        implementation project(path: "$v")
+                        if (v.startsWith("ap:")) {
+                            v = v.replace("ap:", ":")
+                            annotationProcessor project("$v")
+                        } else {
+                            if (versionUp()) {
+                                api project(path: "$v")
+                            } else {
+                                compile project(path: "$v")
+                            }
+                        }
+                    }
+                } else {
+                    if (v.split(":").size() == 3) {
+                        implementation v
+                    } else {
+                        if (v.startsWith("ap:")) {
+                            v = v.replace("ap:", ":")
+                            annotationProcessor project(path: "$v")
+                        } else {
+                            if (isMainModular && !isBuildAll) {
+                                def canImplementation = true
+                                def k = v.replace(":", "")
+//                        k += "RunApp"
+                                def modelIsRunApp = getProp(localProperties, k)
+                                if (modelIsRunApp) {
+                                    canImplementation = false
+                                }
+                                if (canImplementation)
+                                    implementation project(path: "$v")
+                            } else {
+                                implementation project(path: "$v")
+                            }
+                        }
                     }
                 }
+            } else {
+                println("排除自身循环添加Dependency：$v :$projectName")
             }
         }
-    }
-    if (needTest) {
-        testImplementation 'junit:junit:4.12'
-        androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-        androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+        if (needTest) {
+            testImplementation 'junit:junit:4.12'
+            androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+            androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+        }
     }
 }

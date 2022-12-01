@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dime_size_big">32dp</dimen>
+    <dimen name="dime_size_mid">24dp</dimen>
+    <dimen name="dime_size_mid2">18dp</dimen>
+    <dimen name="dime_size_small1">18dp</dimen>
+    <dimen name="dime_size_small2">18dp</dimen>
+    <dimen name="dime_button_text_size">16dp</dimen>
+    <dimen name="dime_textview_text_size">12dp</dimen>
+</resources>
